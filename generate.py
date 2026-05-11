@@ -7,7 +7,7 @@ from openai import OpenAI
 
 # ==================== API 配置 ====================
 DEEPSEEK_KEY = os.environ.get("DEEPSEEK_KEY", "sk-e411674adab84202adea93c8e918b475")
-UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY", "你的Unsplash Access Key")
+UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY", "zbHgRBgMWl4Vgm6td0HMA8o8guj5PK-eSIWVu9YGT_s")
 
 client = OpenAI(
     api_key=DEEPSEEK_KEY,
