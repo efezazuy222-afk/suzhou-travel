@@ -1,0 +1,21 @@
+name: 每日自动发布
+
+on:
+  schedule:
+  - cron: '0 2 * * *'   # 北京时间 10:00（UTC 2:00）
+  - cron: '0 12 * * *'  # 北京时间 20:00（UTC 12:00）
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install openai requests
+      - run: python generate.py
+        env:
+          DEEPSEEK_KEY: ${{sk-e411674adab84202adea93c8e918b475}}
+          UNSPLASH_KEY: ${{zbHgRBgMWl4Vgm6td0HMA8o8guj5PK-eSIWVu9YGT_s}}
