@@ -1,0 +1,112 @@
+---
+import Header from '@src/components/Header.astro';
+import Footer from '@src/components/Footer.astro';
+import { Font } from "astro:assets";
+
+import 'glightbox/dist/css/glightbox.min.css';
+import '@src/styles/style.css';
+import BackToTop from '@src/components/BackToTop.astro';
+
+const navItems = [
+  { label: "首页", href: "/" },
+  { label: "关于", href: "/about" },
+  { label: "套餐", href: "/tours" },
+  { label: "常见问题", href: "/faqs" },
+  { label: "评价", href: "/reviews" },
+  { label: "博客", href: "/blogs" },
+];
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title = "澜青旅行社 - 探索江南水乡之美",
+  description = "澜青旅行社为您提供最地道的江南文化体验，园林、水乡、美食、丝绸，一站式探索人间天堂。",
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+
+    <!-- Primary Meta -->
+    <meta name="description" content={description} />
+    <meta name="author" content="澜青旅行社" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href={Astro.url?.href || "https://suzhoutravel.com"} />
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png" />
+    <Font cssVariable="--font-inter" preload />
+  </head>
+
+  <body class="font-sans bg-blue-950">
+    <Header
+      logo={{
+        src: "/img/logo.png",
+        alt: "澜青旅行社 Logo",
+        href: "/",
+      }}
+      navItems={navItems}
+      cta={{
+        label: "立即预订",
+        href: "/booking",
+      }}
+    />
+    <main>
+      <slot />
+    </main>
+    <Footer
+      backgroundImage="/img/tour5.jpg"
+      about={{
+        title: "关于我们",
+        description:
+          "我们精心策划难忘的苏州文化体验之旅，从古典园林到水乡古镇，每一次旅程都以安全、可持续和对江南文化的热爱为核心。",
+      }}
+      navigation={[
+        { label: "旅游套餐", href: "/tours" },
+        { label: "隐私政策", href: "/privacy" },
+        { label: "服务条款", href: "/terms" },
+        { label: "使用文档", href: "/documentation" },
+      ]}
+      目的地={[
+        "拙政园",
+        "留园",
+        "虎丘",
+        "周庄",
+        "同里",
+      ]}
+      copyright="© 2026 澜青旅行社. 版权所有."
+    />
+    <BackToTop />
+
+    <!-- Alpine.js -->
+    <script>
+      import Alpine from 'alpinejs';
+      declare global {
+        interface Window {
+          Alpine: typeof Alpine;
+        }
+      }
+      window.Alpine = Alpine;
+      Alpine.start();
+    </script>
+
+    <!-- GLightbox -->
+    <script>
+      import GLightbox from 'glightbox';
+
+      const hasLightbox = document.querySelector('.glightbox');
+      if (hasLightbox) {
+        GLightbox({
+          selector: '.glightbox',
+          touchNavigation: true,
+          loop: true,
+        });
+      }
+    </script>
+  </body>
+</html>

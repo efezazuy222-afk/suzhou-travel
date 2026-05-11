@@ -1,0 +1,80 @@
+---
+import AboutSection from "@src/components/AboutSection.astro";
+import BlogSection from "@src/components/BlogSection.astro";
+import CtaSection from "@src/components/CtaSection.astro";
+import HeroSection from "@src/components/HeroSection.astro";
+import TourSection from "@src/components/TourSection.astro";
+import WhySection from "@src/components/WhySection.astro";
+import MainLayout from "@src/layouts/MainLayout.astro";
+---
+
+<MainLayout 
+  title="澜青旅行社 - 苏州导游|苏州旅游|苏州一日游|江南水乡" 
+  description="澜青旅行社专注苏州导游服务，提供苏州园林一日游、水乡古镇跟团游、苏州美食之旅。正规持牌旅行社，专业中文导游，定制您的江南之旅。"
+>
+  <HeroSection
+      backgroundImage="/img/hero.jpg"
+      badgeText="深受全球游客信赖"
+      title="探索苏州之美 非凡体验"
+      description="探索苏州最具代表性的园林与水乡，从拙政园到周庄古镇。我们的苏州之旅专为追求地道、安全、难忘体验的旅行者精心打造。"
+      avatars={[
+        { src: "/img/male1.jpg", alt: "旅行者 1" },
+        { src: "/img/male2.jpg", alt: "旅行者 2" },
+        { src: "/img/female1.jpg", alt: "旅行者 3" },
+        { src: "/img/female2.jpg", alt: "旅行者 4" },
+      ]}
+      reviewText="900+ 条评价"
+      rating={5}
+      ctas={[
+        {
+          label: "旅游套餐",
+          href: "#packages",
+          className: "bg-blue-700 hover:bg-blue-800 text-white",
+        },
+        {
+          label: "关于我们",
+          href: "#about",
+          className: "bg-green-700 hover:bg-green-800 text-white",
+        },
+      ]}
+    />
+  <WhySection title="为什么选择我们" />
+  <TourSection />
+  <AboutSection />
+  <CtaSection />
+  <BlogSection
+      id="blogs"
+      title="澜青旅行日志"
+      description="苏州园林、水乡古镇、美食文化的旅行故事与攻略。"
+      maxPosts={3}
+    />
+</MainLayout>
+<script>
+  (function initSmoothScroll(offset: number = 80): void {
+    document
+      .querySelectorAll<HTMLAnchorElement>('a[href^="#"]')
+      .forEach((anchor) => {
+        anchor.addEventListener("click", (e: MouseEvent) => {
+          const href = anchor.getAttribute("href");
+          if (!href || href === "#" || href.length < 2) return;
+
+          const target = document.querySelector<HTMLElement>(href);
+          if (!target) return;
+
+          e.preventDefault();
+
+          const top =
+            target.getBoundingClientRect().top +
+            window.pageYOffset -
+            offset;
+
+          window.scrollTo({
+            top,
+            behavior: "smooth",
+          });
+
+          history.pushState(null, "", href);
+        });
+      });
+  })(80);
+</script>

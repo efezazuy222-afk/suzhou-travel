@@ -1,0 +1,93 @@
+---
+import { Icon } from 'astro-icon/components';
+
+/* =========================
+   Types
+========================= */
+export interface AboutFeature {
+  icon: string; // astro-icon name, example: "bi:globe2"
+  label: string;
+}
+
+export interface AboutStat {
+  value: string;
+  label: string;
+}
+
+export interface AboutSectionProps {
+  id?: string;
+  title: string;
+  description: string[];
+  features: AboutFeature[];
+  stats: AboutStat[];
+}
+
+/* =========================
+   Default / Sample Data
+========================= */
+const {
+  id = "about",
+  title = "关于我们的苏州之旅",
+  description = [
+    "我们是一家专注于苏州深度文化体验的旅行公司",
+    "从古典园林到水乡古镇，我们致力于为您提供最地道的江南文化体验。",
+  ],
+  features = [
+    { icon: "bi:globe2", label: "精选目的地" },
+    { icon: "bi:award", label: "持牌旅行社" },
+  ],
+  stats = [
+    { value: "12+", label: "苏州景点" },
+    { value: "5K+", label: "满意游客" },
+    { value: "150+", label: "精品行程" },
+    { value: "100%", label: "全额保险" },
+  ],
+} = Astro.props as AboutSectionProps;
+---
+
+<!-- About Section -->
+<section
+  id={id}
+  class="relative py-16 md:py-20 bg-blue-900/20 overflow-hidden"
+>
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 items-center">
+
+      <!-- Text -->
+      <div>
+        <h2 class="text-3xl md:text-4xl font-semibold text-white">
+          {title}
+        </h2>
+
+        {description.map((text) => (
+          <p class="mt-4 text-white/70 leading-relaxed">
+            {text}
+          </p>
+        ))}
+
+        <div class="mt-6 flex flex-col md:flex-row md:items-center gap-4 text-white/80">
+          {features.map((item) => (
+            <div class="flex items-center gap-2">
+              <Icon name={item.icon} class="w-5 h-5" />
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 gap-6">
+        {stats.map((stat) => (
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-6 backdrop-blur">
+            <div class="text-3xl font-semibold text-white">
+              {stat.value}
+            </div>
+            <div class="mt-1 text-white/70">
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
