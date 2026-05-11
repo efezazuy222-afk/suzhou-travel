@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "@types/alpinejs": "^3.13.11"
+  },
+  "overrides": {
+    "vite": "^7"
   }
 }
