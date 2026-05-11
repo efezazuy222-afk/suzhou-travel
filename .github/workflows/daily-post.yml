@@ -17,5 +17,5 @@ jobs:
       - run: pip install openai requests
       - run: python generate.py
         env:
-          DEEPSEEK_KEY: ${{ secrets.sk-e411674adab84202adea93c8e918b475 }}
-          UNSPLASH_KEY: ${{ secrets.zbHgRBgMWl4Vgm6td0HMA8o8guj5PK-eSIWVu9YGT_s }}
+          DEEPSEEK_KEY: ${{ secrets.sk-e411674adab84202adea93c8e918b475}}
+          UNSPLASH_KEY: ${{ secrets.zbHgRBgMWl4Vgm6td0HMA8o8guj5PK-eSIWVu9YGT_s}}
