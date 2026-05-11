@@ -6,8 +6,8 @@ from datetime import datetime
 from openai import OpenAI
 
 # ==================== API 配置 ====================
-DEEPSEEK_KEY = "sk-e411674adab84202adea93c8e918b475"
-UNSPLASH_KEY = "zbHgRBgMWl4Vgm6td0HMA8o8guj5PK-eSIWVu9YGT_s"
+DEEPSEEK_KEY = os.environ.get("DEEPSEEK_KEY", "sk-e411674adab84202adea93c8e918b475")
+UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY", "你的Unsplash Access Key")
 
 client = OpenAI(
     api_key=DEEPSEEK_KEY,
@@ -126,26 +126,58 @@ def git_push(topic):
     else:
         print(f"  ⚠️ 推送失败: {result.stderr}")
 
-# ==================== 主程序 ====================
+# ==================== 预置主题库 ====================
+TOPICS = [
+    ("拙政园赏荷", "zhuozheng-lotus"),
+    ("虎丘剑池探秘", "huqiu-sword-pond"),
+    ("山塘街夜色", "shantang-night"),
+    ("苏州评弹体验", "suzhou-pingtan"),
+    ("太湖三白美食", "taihu-seafood"),
+    ("平江路文艺漫步", "pingjiang-walk"),
+    ("留园建筑赏析", "liuyuan-architecture"),
+    ("狮子林假山迷宫", "shizilin-rockery"),
+    ("周庄水乡古镇", "zhouzhuang-water-town"),
+    ("苏州丝绸博物馆", "suzhou-silk-museum"),
+    ("寒山寺钟声", "hanshan-temple"),
+    ("苏州博物馆建筑之美", "suzhou-museum"),
+    ("东山碧螺春茶园", "dongshan-tea"),
+    ("月光码头日落", "moonlight-sunset"),
+    ("金鸡湖夜游", "jinji-lake"),
+    ("同里退思园", "tongli-tuisi-garden"),
+    ("苏式面点体验", "suzhou-noodles"),
+    ("七里山塘游船", "qili-shan-tang"),
+    ("甪直古镇探幽", "luzhi-ancient-town"),
+    ("苏州民俗博物馆", "suzhou-folk-museum"),
+    ("上方山樱花", "shangfang-cherry"),
+    ("石湖春色", "stone-lake-spring"),
+    ("盘门古城墙", "panmen-city-wall"),
+    ("枫桥夜泊", "fengqiao-night"),
+    ("陆巷古村", "luxiang-ancient-village"),
+    ("苏州刺绣体验", "suzhou-embroidery"),
+    ("灵岩山素斋", "lingyan-temple-food"),
+    ("观前街美食", "guanqian-food-street"),
+    ("阳澄湖大闸蟹", "yangcheng-crab"),
+    ("苏州园林灯光秀", "garden-light-show"),
+]
+
 if __name__ == "__main__":
+    import sys
+    
     print("=" * 50)
     print("  澜青旅行社 - 全自动内容发布系统")
     print("=" * 50)
     
-    topic = input("\n📝 输入主题（如：金鸡湖夜景）: ").strip()
-    if not topic:
-        topic = "苏州旅游"
-    
-    slug = input("🔗 输入英文 slug（如：jinji-lake）: ").strip()
-    if not slug:
-        slug = f"suzhou-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
+    # 随机选主题
+    topic, slug = random.choice(TOPICS)
+    print(f"\n📝 今日主题: {topic}")
+    print(f"🔗 slug: {slug}")
     
     print(f"\n🤖 DeepSeek 正在生成「{topic}」...")
     
-    # 1. 下载一张新图
+    # 1. 下载图片
     new_img = download_unsplash_image(topic, f"sz-{slug}.jpg")
     
-    # 2. 选 4 张图
+    # 2. 选图
     images = get_random_images(4)
     if new_img:
         images[0] = new_img
@@ -154,7 +186,7 @@ if __name__ == "__main__":
     content = generate_tour(topic, images)
     save_tour(slug, content)
     
-    # 4. 自动推送
+    # 4. 推送
     git_push(topic)
     
-    print(f"\n🎉 全部完成！2 分钟后访问 travel-suzhou.com/tours/{slug} 查看。")
+    print(f"\n🎉 全部完成！2 分钟后访问 https://travel-suzhou.com/tours/{slug}")
