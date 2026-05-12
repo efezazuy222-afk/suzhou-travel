@@ -22,4 +22,4 @@ jobs:
 
       # 新增：触发 Cloudflare 重新部署
       - name: 触发 Cloudflare 部署
-        run: curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/464be281-a3dc-4fe5-bba5-517a03e63970"
+        run: curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/0fb6b960-1eb2-44be-8750-ef628cf7bae3"
