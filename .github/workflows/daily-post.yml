@@ -17,5 +17,9 @@ jobs:
       - run: pip install openai requests
       - run: python generate.py
         env:
-          DEEPSEEK_KEY: ${{ secrets.sk-e411674adab84202adea93c8e918b475}}
-          UNSPLASH_KEY: ${{ secrets.zbHgRBgMWl4Vgm6td0HMA8o8guj5PK-eSIWVu9YGT_s}}
+          DEEPSEEK_KEY: ${{ secrets.DEEPSEEK_KEY }}
+          UNSPLASH_KEY: ${{ secrets.UNSPLASH_KEY }}
+
+      # 新增：触发 Cloudflare 重新部署
+      - name: 触发 Cloudflare 部署
+        run: curl -X POST "https://api.cloudflare.com/client/v4/pages/webhooks/deploy_hooks/464be281-a3dc-4fe5-bba5-517a03e63970"
