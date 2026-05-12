@@ -116,15 +116,20 @@ def save_tour(slug, content):
     print(f"  ✅ 已保存: {filepath}")
 
 def git_push(topic):
-    """自动推送到 GitHub"""
-    print("  🚀 正在推送...")
-    subprocess.run(["git", "add", "."], capture_output=True)
+    """提交并推送到 GitHub"""
+    import subprocess
+    print("  🚀 正在提交到 GitHub...")
+    subprocess.run(["git", "config", "user.name", "github-actions"], capture_output=True)
+    subprocess.run(["git", "config", "user.email", "actions@github.com"], capture_output=True)
+    subprocess.run(["git", "add", "src/content/tours/", "public/img/"], capture_output=True)
     subprocess.run(["git", "commit", "-m", f"自动生成: {topic}"], capture_output=True)
     result = subprocess.run(["git", "push"], capture_output=True, text=True)
     if result.returncode == 0:
-        print("  ✅ 推送成功！Cloudflare 自动部署中...")
+        print("  ✅ 提交并推送成功！")
     else:
         print(f"  ⚠️ 推送失败: {result.stderr}")
+        # 打印详细错误
+        print(f"  stdout: {result.stdout}")
 
 # ==================== 预置主题库 ====================
 TOPICS = [
